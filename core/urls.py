@@ -8,4 +8,6 @@ urlpatterns = [
     path("add_team/", views.add_team, name="add_team"),
     path("start_tournament/<int:tournament_id>/", views.start_tournament, name="start_tournament"),
     path("delete_team/", views.delete_team, name="delete_team"),
+    path('view_results/<int:tournament_id>/', views.view_results, name='view_results'), 
+    path('record_scores/', views.record_scores, name='record_scores'),
 ]

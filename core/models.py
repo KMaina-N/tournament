@@ -40,7 +40,11 @@ class Team(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     team_name = models.CharField(max_length=100, blank=True, null=True)
     opponent = models.CharField(max_length=100, null=True, blank=True)
+    team_score = models.IntegerField(default=0)
+    opponent_score = models.IntegerField(default=0)
     modified = models.BooleanField(default=False)
+    score_modified = models.BooleanField(default=False)
+    stage_modified = models.BooleanField(default=False) 
 
     class Meta:
         verbose_name_plural = "Teams"

@@ -37,11 +37,11 @@ def add_tournament(request):
             teams.append(team)
 
         # Pair up teams and set initial opponents
-        for i in range(0, team_count, 2):
-            teams[i].opponent = teams[i + 1].team_name
-            teams[i + 1].opponent = teams[i].team_name
-            teams[i].save()
-            teams[i + 1].save()
+        # for i in range(0, team_count, 2):
+        #     teams[i].opponent = teams[i + 1].team_name
+        #     teams[i + 1].opponent = teams[i].team_name
+        #     teams[i].save()
+        #     teams[i + 1].save()
 
         # Redirect to the team configuration page for the newly created tournament
         return redirect('configure_tournament', tournament_id=new_tournament.id)
@@ -182,4 +182,38 @@ def view_results(request, tournament_id):
         - Rendered template
 
     """
-    return render(request, 'view_results.html')
+    tournament = Tournament.objects.get(pk=tournament_id)
+    teams = Team.objects.filter(tournament=tournament)
+    
+    context = {}
+    context['teams'] = teams
+    context['tournament'] = tournament
+    return render(request, 'view_results.html', context=context)
+
+def record_scores(request):
+    """
+    Record scores of the match
+    """
+    if request.method == 'GET':
+        # print the data
+        print(request.GET)
+        team_name = request.GET.get('team_name')
+        team_id = request.GET.get('team_id')
+        opponent = request.GET.get('opponent')
+        team_score = request.GET.get('team_score')
+        opponent_score = request.GET.get('opponent_score')
+        print(team_name, team_id, opponent)
+        # update the team name
+        team_id = int(team_id)
+        team = Team.objects.get(pk=team_id)
+        print(team)
+        team.team_name = team_name
+        team.team_score = team_score
+        team.opponent = opponent
+        team.opponent_score = opponent_score
+        team.modified = True
+        team.score_modified = True
+        team.save()
+
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'failed'})
