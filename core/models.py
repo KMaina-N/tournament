@@ -45,7 +45,8 @@ class Team(models.Model):
     modified = models.BooleanField(default=False)
     score_modified = models.BooleanField(default=False)
     stage_modified = models.BooleanField(default=False) 
-
+    win = models.IntegerField(default=0)
+    
     class Meta:
         verbose_name_plural = "Teams"
         verbose_name = "Team"
@@ -70,3 +71,64 @@ class Player(models.Model):
 
     def __str__(self):
         return self.player_name
+
+class Quarters(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    
+    # home_team = models.CharField(max_length=100, blank=True, null=True)
+    opponent = models.CharField(max_length=100, null=True, blank=True)
+    
+    team_score = models.IntegerField(default=0)
+    opponent_score = models.IntegerField(default=0)
+    
+    score_modified = models.BooleanField(default=False)
+    
+    
+class Semi(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    
+    # home_team = models.CharField(max_length=100, blank=True, null=True)
+    opponent = models.CharField(max_length=100, null=True, blank=True)
+    
+    team_score = models.IntegerField(default=0)
+    opponent_score = models.IntegerField(default=0)
+    
+    score_modified = models.BooleanField(default=False)
+    
+class PosThree(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    
+    # home_team = models.CharField(max_length=100, blank=True, null=True)
+    opponent = models.CharField(max_length=100, null=True, blank=True)
+    
+    team_score = models.IntegerField(default=0)
+    opponent_score = models.IntegerField(default=0)
+    
+    score_modified = models.BooleanField(default=False)
+    
+class Finals(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    
+    # home_team = models.CharField(max_length=100, blank=True, null=True)
+    opponent = models.CharField(max_length=100, null=True, blank=True)
+    
+    team_score = models.IntegerField(default=0)
+    opponent_score = models.IntegerField(default=0)
+    
+    score_modified = models.BooleanField(default=False)
+    
+class Ranking(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    
+    # home_team = models.CharField(max_length=100, blank=True, null=True)
+    opponent = models.CharField(max_length=100, null=True, blank=True)
+    
+    team_score = models.IntegerField(default=0)
+    opponent_score = models.IntegerField(default=0)
+    
+    score_modified = models.BooleanField(default=False)
